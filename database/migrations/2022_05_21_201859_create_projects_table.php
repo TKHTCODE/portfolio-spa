@@ -18,6 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('title')->unique();
             $table->string('description');
             $table->string('color');
+            $table->string('icon_name');
             $table->timestamps();
         });
     }
