@@ -34,6 +34,7 @@ const submit = () => {
         <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
+            @csrf
             <div>
                 <JetLabel for="name" value="Name" />
                 <JetInput
