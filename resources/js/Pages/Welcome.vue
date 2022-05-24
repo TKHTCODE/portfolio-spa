@@ -16,7 +16,7 @@ defineProps({
   <Head title="Welcome" />
 
   <Section
-    class="grid grid-cols-2 text-right py-10 px-72 bg-gray-800 text-gray-300"
+    class="grid grid-cols-2 text-right py-10 px-24 bg-gray-800 text-gray-300"
   >
     <div>
       <jet-application-mark class="h-12 w-auto"></jet-application-mark>
@@ -78,7 +78,7 @@ defineProps({
         <a href="#skills">&#8675;</a>
       </div>
     </Section>
-    <Section id="skills" class="bg-zinc-300 text-gray-900 h-screen">
+    <Section id="skills" class="bg-zinc-300 text-gray-900 ">
       <h2 class="text-6xl font-bold pt-3">Skills</h2>
 
       <div class="grid grid-cols-2">
@@ -119,7 +119,10 @@ defineProps({
     </Section>
     <Section class="flex justify-between bg-gray-800 text-gray-300 text-xl">
       <p>&copy; Taka. All right reserved</p>
-      <div class="flex justify-evenly items-center">Github Facebook</div>
+      <div class="flex justify-evenly items-center">
+        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#">Github</Link>
+        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#">Facebook</Link>
+        </div>
     </Section>
   </div>
 </template>
