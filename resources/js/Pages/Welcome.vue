@@ -1,14 +1,39 @@
-<script setup>
+<script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import JetApplicationMark from "@/Jetstream/ApplicationMark";
 import Section from "@/components/Section";
 import JetButton from "@/Jetstream/Button";
 import Skill from "@/components/Skill";
+import Project from "@/components/Project";
 
-defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
-  skills: Object,
+import { defineAsyncComponent, defineComponent } from "@vue/runtime-core";
+
+export default defineComponent({
+  components: {
+    Head,
+    Link,
+    JetApplicationMark,
+    JetButton,
+    Section,
+    Skill,
+    Project,
+  },
+
+  props: {
+    canLogin: Boolean,
+    canRegister: Boolean,
+    skills: Object,
+    projects: Object,
+  },
+  methods: {
+    componentName(index) {
+      return defineAsyncComponent(() =>
+        import(
+          "@heroicons/vue/solid/" + this.projects[index].icon_name + "Icon.js"
+        )
+      );
+    },
+  },
 });
 </script>
 
@@ -78,7 +103,7 @@ defineProps({
         <a href="#skills">&#8675;</a>
       </div>
     </Section>
-    <Section id="skills" class="bg-zinc-300 text-gray-900 ">
+    <Section id="skills" class="bg-zinc-300 text-gray-900">
       <h2 class="text-6xl font-bold pt-3">Skills</h2>
 
       <div class="grid grid-cols-2">
@@ -101,8 +126,18 @@ defineProps({
         >
       </div>
     </Section>
-    <Section class="bg-sky-400 text-gray-900 h-screen">
+    <Section class="bg-sky-400 text-gray-900">
       <h2 class="text-6xl font-bold pt-3">Projects</h2>
+
+      <div v-for="(project, index) in projects" :key="project">
+        <Project
+          :title="project.title"
+          :description="project.description"
+          :color="project.color"
+        >
+          <component :is="componentName(index)"></component>
+        </Project>
+      </div>
 
       <div class="flex justify-center mt-10">
         <jet-button
@@ -120,9 +155,13 @@ defineProps({
     <Section class="flex justify-between bg-gray-800 text-gray-300 text-xl">
       <p>&copy; Taka. All right reserved</p>
       <div class="flex justify-evenly items-center">
-        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#">Github</Link>
-        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#">Facebook</Link>
-        </div>
+        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#"
+          >Github</Link
+        >
+        <Link class="border-b pb-1 px-2 hover:text-gray-50" href="#"
+          >Facebook</Link
+        >
+      </div>
     </Section>
   </div>
 </template>
