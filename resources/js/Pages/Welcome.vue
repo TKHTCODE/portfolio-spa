@@ -3,6 +3,9 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import JetApplicationMark from "@/Jetstream/ApplicationMark";
 import Section from "@/components/Section";
 import JetButton from "@/Jetstream/Button";
+import JetModal from "@/Jetstream/Modal";
+import JetInput from "@/Jetstream/Input";
+import JetInputError from "@/Jetstream/InputError";
 import Skill from "@/components/Skill";
 import Project from "@/components/Project";
 
@@ -14,6 +17,9 @@ export default defineComponent({
     Link,
     JetApplicationMark,
     JetButton,
+    JetModal,
+    JetInput,
+    JetInputError,
     Section,
     Skill,
     Project,
@@ -33,6 +39,18 @@ export default defineComponent({
         )
       );
     },
+    submit() {
+      this.form.post(route("contact"));
+    },
+  },
+  data() {
+    return {
+      contacting: null,
+      form: this.$inertia.form({
+        email: "",
+        message: "",
+      }),
+    };
   },
 });
 </script>
@@ -94,8 +112,12 @@ export default defineComponent({
               text-sm text-gray-800
               hover:bg-green-800
             "
-            >Click</jet-button
+            @click="contacting = true"
           >
+            {{
+              $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
+            }}
+          </jet-button>
         </div>
       </div>
 
@@ -122,8 +144,12 @@ export default defineComponent({
             text-sm text-gray-200
             hover:bg-indigo-700
           "
-          >Press</jet-button
+          @click="contacting = true"
         >
+          {{
+            $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
+          }}
+        </jet-button>
       </div>
     </Section>
     <Section class="bg-sky-400 text-gray-900">
@@ -148,8 +174,12 @@ export default defineComponent({
             text-sm text-gray-800
             hover:bg-purple-200
           "
-          >Button</jet-button
+          @click="contacting = true"
         >
+          {{
+            $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
+          }}
+        </jet-button>
       </div>
     </Section>
     <Section class="flex justify-between bg-gray-800 text-gray-300 text-xl">
@@ -164,4 +194,51 @@ export default defineComponent({
       </div>
     </Section>
   </div>
+  <jet-modal :show="contacting" closable="true" @close="contacting = null">
+    <div
+      class="bg-green-600 shadow-2xl p-8 text-center font-bold"
+      v-if="$page.props.flash.contacted"
+    >
+      <p class="text-5xl m-5 text-white">Submission success</p>
+    </div>
+    <div class="bg-gray-50 shadow-2xl p-8" v-else>
+      <p class="text-gray-600 text-2xl font-extrabold text-center">
+        Let me know some details
+      </p>
+      <form class="flex flex-col items-center p-16" @submit.prevent="submit">
+        <jet-input
+          class="px-5 py-3 w-96 border border-gray-600 rouded"
+          v-model="form.email"
+          placeholder="Your email"
+        >
+        </jet-input>
+        <jet-input-error :message="form.errors.email" />
+        <textarea
+          class="px-5 py-3 w-96 border border-gray-600 rounded mt-5"
+          name="message"
+          v-model="form.message"
+          placeholder="Message"
+        ></textarea>
+        <jet-input-error :message="form.errors.message" />
+        <jet-button
+          class="
+            px-5
+            py-3
+            mt-5
+            w-96
+            bg-purple-800
+            justify-center
+            rounded-xl
+            test-sm
+          "
+          :disabled="form.processing"
+        >
+          <span class="animate-spin mr-1 bg-gray-700" v-show="form.processing"
+            >&#9696;</span
+          >
+          <span v-show="!form.processing">Get in touch</span>
+        </jet-button>
+      </form>
+    </div>
+  </jet-modal>
 </template>

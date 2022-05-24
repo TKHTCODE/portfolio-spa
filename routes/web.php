@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Mail\ContactMessage;
 use App\Models\Skill;
 use App\Models\Project;
 use Illuminate\Foundation\Application;
@@ -25,6 +27,13 @@ Route::get('/', function () {
         'projects' => Project::all(),
     ]);
 });
+
+Route::post('contact', [ContactController::class, 'contact'])
+    ->name('contact');
+
+// Route::get('/test', function(){
+//     return new ContactMessage('test@test.com', 'Just testing...');
+// });
 
 Route::middleware([
     'auth:sanctum',
