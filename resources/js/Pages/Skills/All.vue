@@ -1,16 +1,15 @@
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import JetButton from "@/jetstream/Button";
+import AppLayout from "@/Layouts/AppLayout";
+import JetButton from "@/Jetstream/Button";
 import JetModal from "@/Jetstream/Modal";
 import JetInput from "@/Jetstream/Input";
 import JetInputError from "@/Jetstream/InputError";
-
 export default {
   components: {
     AppLayout,
     JetButton,
-    JetInput,
     JetModal,
+    JetInput,
     JetInputError,
   },
   props: {
@@ -19,7 +18,7 @@ export default {
   },
   methods: {
     submit() {
-      this.form.submit("post", route("skills.store"), {
+      this.form.submit(this.method, this.action, {
         onSuccess: () => {
           this.form.reset("name");
           this.form.reset("color");
@@ -31,6 +30,8 @@ export default {
   data() {
     return {
       acting: null,
+      method: null,
+      action: null,
       form: this.$inertia.form({
         name: "",
         color: "",
@@ -41,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <AppLayout title="Dashboard">
+  <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Skills</h2>
     </template>
@@ -51,29 +52,36 @@ export default {
         <jet-button
           class="
             p-3
-            border-3 border-indigo-500
-            text-indigo-500
-            bg-indigo-50
-            hover:bg-indigo-200
+            border-2 border-blue-500
+            text-blue-500
+            bg-blue-100
+            hover:bg-blue-200
+            font-bold
+            rounded-xl
           "
-          @click="acting = true"
-          >Add new +</jet-button
+          @click="
+            acting = true;
+            method = 'post';
+            action = route('skills.store');
+          "
         >
+          Add New +
+        </jet-button>
 
-        <jet-modal :show="acting" closable="true" @close="acting = null">
+        <jet-modal :show="acting" closeable="true" @close="acting = null">
           <div class="bg-gray-50 shadow-2xl p-8">
             <form
               class="flex flex-col items-center p-16"
               @submit.prevent="submit"
             >
               <jet-input
-                class="px-5 py-3 w-96 border border-gray-600 rouded"
+                class="px-5 py-3 w-96 border border-gray-600 rounded"
                 type="text"
                 name="name"
-                v-model="form.name"
                 placeholder="Skill name"
-              >
-              </jet-input>
+                v-model="form.name"
+              ></jet-input>
+
               <jet-input-error :message="form.errors.name" />
 
               <select
@@ -81,11 +89,7 @@ export default {
                 v-model="form.color"
               >
                 <option value="">Select a color</option>
-                <option
-                  v-for="color in availableColors"
-                  :key="color"
-                  :value="color"
-                >
+                <option v-for="color in availableColors" :value="color" :key="color">
                   {{ color }}
                 </option>
               </select>
@@ -98,19 +102,18 @@ export default {
                   py-3
                   mt-5
                   w-96
-                  bg-purple-800
+                  bg-purple-400
                   justify-center
                   rounded-xl
-                  test-sm
+                  text-sm
                 "
                 :disabled="form.processing"
               >
-                <span
-                  class="animate-spin mr-1 bg-gray-700"
-                  v-show="form.processing"
-                  >&#9696;</span
-                >
-                <span v-show="!form.processing">Register</span>
+                <span class="animate-spin mr-1" v-show="form.processing">
+                  &#9696;
+                </span>
+
+                <span v-show="!form.processing"> Submit </span>
               </jet-button>
             </form>
           </div>
@@ -125,36 +128,52 @@ export default {
             </tr>
           </thead>
           <tbody v-for="skill in skills" :key="skill">
-            <tr class="text-sm text-emerald-900 border-b border-gray-400">
-              <td class="px-6 py-4">{{ skill.name }}</td>
-              <td class="px-py-4">
+            <tr class="text-sm text-indigo-900 border-b border-gray-400">
+              <td class="px-6 py-4">
+                {{ skill.name }}
+              </td>
+              <td class="px-6 py-4">
                 <p>
-                  <span class="mr-5 py-4 px-6 rounded" :class="skill.color">
-                  </span>
+                  <span class="mr-5 p-4 rounded" :class="skill.color"></span>
                   {{ skill.color }}
                 </p>
               </td>
-              <td>
+              <td class="px-6 py-4">
                 <jet-button
                   class="
-                    border border-emerald-500
-                    text-emerald-500
-                    bg-emerald-50
-                    hover:bg-indigo-200
-                    mr-3
+                    border 
+                    border-blue-500
+                    text-blue-500
+                    bg-blue-50
+                    hover:bg-blue-100
+                    mr-2
                   "
-                  >Edit</jet-button
+                  @click="
+                    acting = true;
+                    method = 'put';
+                    action = route('skills.update', [skill.id]);
+                    form.name = skill.name;
+                    form.color = skill.color;
+                  "
                 >
+                  Edit
+                </jet-button>
                 <jet-button
                   class="
-                    border border-rose-500
-                    text-rose-500
-                    bg-rose-50
-                    hover:bg-rose-200
-                    mr-3
+                    border border-red-500
+                    text-red-500
+                    bg-red-50
+                    hover:bg-red-100
+                    ml-2
                   "
-                  >Delete</jet-button
+                  @click="
+                    method = 'delete';
+                    action = route('skills.destroy', [skill.id]);
+                    submit();
+                  "
                 >
+                  Delete
+                </jet-button>
               </td>
             </tr>
           </tbody>
@@ -162,19 +181,17 @@ export default {
         <div
           v-else
           class="
-            bg-white
-            overflow-hidden
-            shadow-xl
+            bg-rose-100
+            border border-rose-400
+            p-3
             rounded-lg
-            p-6
-            border-gray-200
-            flex-col
-            text-xl
+            text-rose-800 text-left
+            mt-8
           "
         >
-          There are no skills for now. Add something.
+          There are no skills. Please add something.
         </div>
       </div>
     </div>
-  </AppLayout>
+  </app-layout>
 </template>
