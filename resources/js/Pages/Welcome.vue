@@ -141,25 +141,6 @@ export default defineComponent({
           <component :is="componentName(index)"></component>
         </Project>
       </div>
-
-      <div class="flex justify-center mt-10">
-        <jet-button
-          class="
-            bg-purple-100
-            rounded
-            font-bold
-            text-sm text-gray-800
-            hover:bg-purple-200
-          "
-          @click="contacting = true"
-        >
-          {{
-            $page.props.flash.contacted
-              ? "Messeage was sent. Thanks!"
-              : "Send message"
-          }}
-        </jet-button>
-      </div>
     </Section>
     <Section class="flex justify-between bg-gray-800 text-gray-300 text-xl">
       <p>&copy; Taka. All right reserved</p>
