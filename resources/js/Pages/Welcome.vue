@@ -58,9 +58,7 @@ export default defineComponent({
 <template>
   <Head title="Welcome" />
 
-  <Section
-    class="grid grid-cols-2 text-right px-24 bg-gray-900 text-gray-300"
-  >
+  <Section class="grid grid-cols-2 text-right px-24 bg-gray-900 text-gray-300">
     <div>
       <jet-application-mark class="h-12 w-auto"></jet-application-mark>
     </div>
@@ -110,24 +108,6 @@ export default defineComponent({
           </Skill>
         </div>
       </div>
-      <div class="flex justify-center mt-10">
-        <jet-button
-          class="
-            bg-indigo-800
-            rounded
-            font-bold
-            text-sm text-gray-200
-            hover:bg-indigo-700
-          "
-          @click="contacting = true"
-        >
-          {{
-            $page.props.flash.contacted
-              ? "Messeage was sent. Thanks!"
-              : "Send message"
-          }}
-        </jet-button>
-      </div>
     </Section>
     <Section class="bg-sky-400 text-gray-900">
       <h2 class="text-6xl font-bold pt-3 font-mono">Projects</h2>
@@ -152,6 +132,24 @@ export default defineComponent({
           >Facebook</Link
         >
       </div>
+      <!-- <div class="flex justify-center mt-10">
+        <jet-button
+          class="
+            bg-indigo-800
+            rounded
+            font-bold
+            text-sm text-gray-200
+            hover:bg-indigo-700
+          "
+          @click="contacting = true"
+        >
+          {{
+            $page.props.flash.contacted
+              ? "Messeage was sent. Thanks!"
+              : "Send message"
+          }}
+        </jet-button>
+      </div> -->
     </Section>
   </div>
   <jet-modal :show="contacting" closable="true" @close="contacting = null">
