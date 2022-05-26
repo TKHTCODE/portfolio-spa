@@ -60,7 +60,7 @@ export default defineComponent({
 
   <Section class="grid grid-cols-2 text-right px-24 bg-gray-900 text-gray-300">
     <div>
-      <jet-application-mark class="h-12 w-auto"></jet-application-mark>
+      <img class="h-12 w-auto" src="https://taka-portfolio.s3.us-west-1.amazonaws.com/logotkht.png" alt="logo">
     </div>
     <div v-if="canLogin">
       <Link

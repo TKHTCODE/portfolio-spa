@@ -43,7 +43,7 @@ const logout = () => {
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <JetApplicationMark class="block h-9 w-auto" />
+                                   <img class="block h-9 w-auto" src="https://taka-portfolio.s3.us-west-1.amazonaws.com/logo-tkht-color.png" alt="logo">
                                 </Link>
                             </div>
 
