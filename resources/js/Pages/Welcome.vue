@@ -90,17 +90,7 @@ export default defineComponent({
   <div>
     <Section class="bg-blue-900 pt-16 h-screen">
       <div class="h-2/3 flex flex-wrap content-between pb-36">
-        <p
-          class="
-            border-b-2
-            font-bold
-            border-gray-200
-            text-2xl text-gray-200
-            uppercase
-          "
-        >
-          Hey This is Taka. I'm a Web developer.
-        </p>
+      <video class="w-full" src="https://taka-ortfolio.s3.us-west-1.amazonaws.com/viltstack.mp4" autoplay playsinline muted loop>
 
         <div class="flex items-end border-b-2 border-gray-500 pb-2">
           <p class="font-bold mr-5 text-gray-500 text-xl">Want to know more?</p>
