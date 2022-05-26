@@ -59,7 +59,7 @@ export default defineComponent({
   <Head title="Welcome" />
 
   <Section
-    class="grid grid-cols-2 text-right py-10 px-24 bg-gray-800 text-gray-300"
+    class="grid grid-cols-2 text-right px-24 bg-gray-900 text-gray-300"
   >
     <div>
       <jet-application-mark class="h-12 w-auto"></jet-application-mark>
@@ -88,35 +88,20 @@ export default defineComponent({
   </Section>
 
   <div>
-    <Section class="bg-blue-900 pt-16 h-screen">
-      <div class="h-2/3 flex flex-wrap content-between pb-36">
-      <video class="w-full" src="https://taka-ortfolio.s3.us-west-1.amazonaws.com/viltstack.mp4" autoplay playsinline muted loop>
-
-        <div class="flex items-end border-b-2 border-gray-500 pb-2">
-          <p class="font-bold mr-5 text-gray-500 text-xl">Want to know more?</p>
-          <jet-button
-            class="
-              bg-green-400
-              rounded
-              font-bold
-              text-sm text-gray-800
-              hover:bg-green-800
-            "
-            @click="contacting = true"
-          >
-            {{
-              $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
-            }}
-          </jet-button>
-        </div>
-      </div>
-
-      <div class="animate-pulse mt-3 text-gray-300 text-center text-9xl">
-        <a href="#skills">&#8675;</a>
+    <Section class="bg-gray-900 pt-16 px-0">
+      <div class="flex flex-wrap content-between pb-36">
+        <video
+          class="w-fulll"
+          src="https://taka-portfolio.s3.us-west-1.amazonaws.com/viltstack.mp4"
+          autoplay
+          playsinline
+          muted
+          loop
+        ></video>
       </div>
     </Section>
     <Section id="skills" class="bg-zinc-300 text-gray-900">
-      <h2 class="text-6xl font-bold pt-3">Skills</h2>
+      <h2 class="text-6xl font-bold pt-3 font-mono">Skills</h2>
 
       <div class="grid grid-cols-2">
         <div v-for="skill in skills" :key="skill">
@@ -137,13 +122,15 @@ export default defineComponent({
           @click="contacting = true"
         >
           {{
-            $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
+            $page.props.flash.contacted
+              ? "Messeage was sent. Thanks!"
+              : "Send message"
           }}
         </jet-button>
       </div>
     </Section>
     <Section class="bg-sky-400 text-gray-900">
-      <h2 class="text-6xl font-bold pt-3">Projects</h2>
+      <h2 class="text-6xl font-bold pt-3 font-mono">Projects</h2>
 
       <div v-for="(project, index) in projects" :key="project">
         <Project
@@ -167,7 +154,9 @@ export default defineComponent({
           @click="contacting = true"
         >
           {{
-            $page.props.flash.contacted ? "Messeage was sent. Thanks!" : "Send message"
+            $page.props.flash.contacted
+              ? "Messeage was sent. Thanks!"
+              : "Send message"
           }}
         </jet-button>
       </div>
